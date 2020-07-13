@@ -1,15 +1,16 @@
 import React ,{useContext ,useEffect }  from 'react';
-import {
+import { 
     View, 
     Text, 
-    Button,
     TouchableOpacity, 
     TextInput,
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert
+    Alert,
+    Image
 } from 'react-native';
+
 import * as Animatable from 'react-native-animatable';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -17,13 +18,6 @@ import AuthContext from './context';
 import { useTheme } from 'react-native-paper';
 import Users from '../model/users';
 import AsyncStorage from '@react-native-community/async-storage';
-import { NavigationContainer } from '@react-navigation/native';
-import Search from '../Components/Search'
-import News from '../Components/News'
-
-import { createStackNavigator } from 'react-navigation-stack';
-
-import { HeaderHeightContext } from 'react-navigation-stack'
 
 const SignInScreen = ({navigation}) => {
 
@@ -45,7 +39,7 @@ const SignInScreen = ({navigation}) => {
         isValidUser: true,
         isValidPassword: true,
     });
-
+    
     const { colors } = useTheme();
   // const { signIn } = React.useContext(AuthContext);
 
@@ -105,36 +99,19 @@ const SignInScreen = ({navigation}) => {
     }
    
     const loginHandle = (userName, password)  =>{
-      
+
         var var1= false;
         const foundUser = Users.filter( item => {
-
-    return userName == item.username && password == item.password;
-   
-           
+              if( userName == item.username && password == item.password) 
+              {
+                   navigation.navigate("Search");
+              }
+             
         });
-        
+       
 
-        if ( data.username.length == 0 || data.password.length == 0 ) {
-            Alert.alert('Entrée erronée!', 'Nom d\'utilisateur ou mot de passe ne doit pas être vide.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
-
-        if ( foundUser.length == 0 ) {
-            Alert.alert('Utilisateur invalide!', 'Utilisateur ou mdp erronné.', [
-                {text: 'Okay'}
-            ]);
-            return;
-        }
-        else{
-            return <Search />;}
-  
-             navigation.navigate('Navigation');
-  
+      
     }
-    
     const loginReducer = (prevState, action) => {
         switch( action.type ) {
           case 'RETRIEVE_TOKEN': 
@@ -168,7 +145,7 @@ const SignInScreen = ({navigation}) => {
       };
     
       const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
- 
+    
       const authContext = React.useMemo(() => ({
         signIn: async(foundUser) => {
           // setUserToken('fgkj');
@@ -318,7 +295,6 @@ const SignInScreen = ({navigation}) => {
                 <Text style={{color: '#57A0D3', marginTop:15}}>Mot de passe oublié</Text>
             </TouchableOpacity>
             <View style={styles.button}>
-              
                 <TouchableOpacity
                     style={styles.signIn}
                     onPress={() => {loginHandle( data.username, data.password )}}
@@ -326,6 +302,7 @@ const SignInScreen = ({navigation}) => {
                <Text style={styles.Connect}  colors={['#08d4c4', '#01ab9d']} > SE CONNECTER
              
                   </Text>
+            
                     </TouchableOpacity>
 
 

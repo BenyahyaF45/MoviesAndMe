@@ -7,7 +7,9 @@ import Search from '../Components/Search'
 import FilmDetail from '../Components/FilmDetail'
 import Favorites from '../Components/Favorites'
 import News from '../Components/News'
-import MapScreen from '../Components/MapScreen';
+import SignInScreen from '../app/index';
+import MapScreen from '../Components/MapScreen'
+
 
 const SearchStackNavigator = createStackNavigator({
   Search: {
@@ -20,6 +22,7 @@ const SearchStackNavigator = createStackNavigator({
   FilmDetail: {
     screen: FilmDetail
   },
+
  
 })
 const NewsStackNavigator = createStackNavigator({
@@ -33,6 +36,8 @@ const NewsStackNavigator = createStackNavigator({
     screen: FilmDetail,
   }
 })
+
+ 
 const MoviesTabNavigator = createBottomTabNavigator(
   {
     Search: {
@@ -54,7 +59,8 @@ const MoviesTabNavigator = createBottomTabNavigator(
             style={styles.icon}/>
         }
       }
-    }, News: {
+    }
+    , News: {
       screen: NewsStackNavigator,
       navigationOptions: {
         tabBarIcon: () => {
@@ -64,6 +70,7 @@ const MoviesTabNavigator = createBottomTabNavigator(
         }
       }
     },
+    
     Maps: {
       screen: MapScreen,
       navigationOptions: {
@@ -75,6 +82,7 @@ const MoviesTabNavigator = createBottomTabNavigator(
       }
     }
   },
+  
   {
     tabBarOptions: {
       activeBackgroundColor: '#DDDDDD', 
@@ -84,6 +92,20 @@ const MoviesTabNavigator = createBottomTabNavigator(
     }
   }
 )
+const LoginStackNavigator = createStackNavigator({
+  SignInScreen: {
+    screen: SignInScreen
+  },
+  Home: { 
+    screen : MoviesTabNavigator 
+  }
+}, 
+{
+   headerMode: 'none',
+   defaultNavigationOptions: {
+   gesturesEnabled: false
+}}
+)
 
 const styles = StyleSheet.create({
   icon: {
@@ -92,4 +114,5 @@ const styles = StyleSheet.create({
   }
 })
 
-export default createAppContainer(MoviesTabNavigator)
+export default createAppContainer(LoginStackNavigator)
+
